@@ -176,11 +176,16 @@ let movespeedLevel = 1;
 const maxMovespeedLevel = 5;
 let movespeedCost = 10;
 const movespeedCostIncrease = 5;
-const movespeedPerLevel = 0.3;
+let movespeedPerLevel = 0.3;
 
 // === YENİ: Damage textleri ===
 let damageTexts = [];
 const damageTextDuration = 500; // ms
+
+// === YENİ: Ultimate Skill sistemi ===
+let killCount = 0;
+const ultimateKillRequirement = 50;
+let ultimateReady = false;
 
 // === YENİ: Sinek görselleri ===
 const imgMosquitoNormal = new Image();
@@ -598,6 +603,10 @@ function checkCollisions() {
           }
           flies.splice(i, 1);
           score++;
+          killCount++;
+          if (killCount >= ultimateKillRequirement) {
+            ultimateReady = true;
+          }
           try { teemoAudio.currentTime = 0; teemoAudio.play(); } catch(e){}
         }
         break;
@@ -733,6 +742,7 @@ function update(timestamp) {
   drawBoss();
   drawBossProjectiles();
   drawBullets();
+  drawUltimateIndicator();
   updateMovement();
   newPos();
   updateFlies();
@@ -813,6 +823,21 @@ window.addEventListener('keydown', (e) => {
       slowTimeout = now + slowSkillDuration;
       slowCooldown = now + slowCooldownTime;
     }
+  }
+  // === YENİ: Ultimate skill aktivasyonu ===
+  if ((e.key === 'f' || e.key === 'F') && ultimateReady) {
+    // Tüm sinekleri öldür
+    for (const fly of flies) {
+      // Her sinek için gold düşür
+      for (let g = 0; g < fly.maxHp; g++) {
+        golds.push({ x: fly.x, y: fly.y });
+      }
+      score++;
+      try { teemoAudio.currentTime = 0; teemoAudio.play(); } catch(e){}
+    }
+    flies.length = 0;
+    killCount = 0;
+    ultimateReady = false;
   }
 });
 window.addEventListener('keyup', (e) => {
@@ -973,6 +998,37 @@ function drawPowerStatus(y) {
   ctx.restore();
 }
 
+// === YENİ: Ultimate skill göstergesi ===
+function drawUltimateIndicator() {
+  ctx.save();
+  const boxX = 20;
+  const boxY = canvas.height - 60;
+  const boxWidth = 280; // Kutuyu genişlettim
+  
+  // Arka plan
+  ctx.fillStyle = ultimateReady ? '#4caf50' : '#9e9e9e';
+  ctx.globalAlpha = 0.15;
+  ctx.fillRect(boxX, boxY, boxWidth, 40);
+  ctx.globalAlpha = 1;
+  
+  // Çerçeve
+  ctx.strokeStyle = ultimateReady ? '#2e7d32' : '#616161';
+  ctx.lineWidth = 2;
+  ctx.strokeRect(boxX, boxY, boxWidth, 40);
+  
+  // Metin
+  ctx.font = 'bold 16px Arial';
+  ctx.fillStyle = ultimateReady ? '#2e7d32' : '#616161';
+  ctx.textAlign = 'left';
+  ctx.fillText('F: Tüm Sinekleri Öldür', boxX + 10, boxY + 25);
+  
+  // Sayaç
+  ctx.textAlign = 'right';
+  ctx.fillText(`${killCount}/${ultimateKillRequirement}`, boxX + boxWidth - 10, boxY + 25);
+  
+  ctx.restore();
+}
+
 // Oyun başında butonları enable et
 window.onload = function() {
   document.getElementById('btn-atkspeed').disabled = atkspeedLevel >= maxAtkspeedLevel;
@@ -1003,17 +1059,6 @@ function updateGolds() {
       const pull = 16 + magnetLevel * 3;
       g.x += ((px - gx) / dist) * pull;
       g.y += ((py - gy) / dist) * pull;
-    }
-  }
-  // Son seviye: kalbi de çek
-  if (magnetLevel >= maxMagnetLevel && heart) {
-    let hx = heart.x + heartSize/2;
-    let hy = heart.y + heartSize/2;
-    let dist = Math.sqrt((px - hx) ** 2 + (py - hy) ** 2);
-    if (dist > 1) {
-      const pull = 12;
-      heart.x += ((px - hx) / dist) * pull;
-      heart.y += ((py - hy) / dist) * pull;
     }
   }
 }
