@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sinek Avcısı Oyun</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Sinek Avcısı</h1>
+  <canvas id="gameCanvas"></canvas>
+  <div id="pauseMenu" style="display:none;">
+    <div class="pause-content">
+      <h2>Oyun Duraklatıldı</h2>
+      <div id="upgrades-panel">
+        <h3>Güçlendirmeler</h3>
+        <button id="btn-magnet">Magnet (10 altın) - Seviye: <span id="magnet-level">0</span>/5</button>
+        <button id="btn-atkspeed">Attack Speed (10 altın) - Seviye: <span id="atkspeed-level">1</span>/10</button>
+        <button id="btn-dmg">DMG (+0.5) (<span id="dmg-cost">10</span> altın) - Seviye: <span id="dmg-level">0</span></button>
+        <button id="btn-multishot">Atış Sayısı (25 altın) - Seviye: <span id="multishot-level">1</span>/5</button>
+        <button id="btn-movespeed">Movement Speed (10 altın) - Seviye: <span id="movespeed-level">1</span>/5</button>
+      </div>
+      <br>
+      <button id="btn-resume">Devam Et</button>
+      <button id="btn-restart">Yeniden Başlat</button>
+    </div>
+  </div>
+  <script src="game.js"></script>
+</body>
+</html> 

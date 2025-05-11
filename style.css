@@ -1,0 +1,135 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+body {
+  width: 100vw;
+  height: 100vh;
+  background: #e0f2f1;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  color: #006064;
+}
+
+#hud {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  z-index: 5;
+  background: rgba(255,255,255,0.7);
+  padding: 8px 18px;
+  border-radius: 12px;
+  font-size: 22px;
+  font-family: Arial, sans-serif;
+}
+
+#gameCanvas {
+  display: block;
+  position: absolute;
+  left: 0; top: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #fff;
+  z-index: 1;
+  border: 2px solid #006064;
+  margin-top: 20px;
+}
+
+#upgradeMenu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 2px solid #006064;
+  border-radius: 10px;
+  margin-left: 30px;
+  padding: 20px;
+  min-width: 220px;
+  text-align: left;
+  box-shadow: 0 2px 12px #0002;
+}
+#upgradeMenu h2 {
+  font-size: 20px;
+  margin-top: 0;
+}
+#upgradeMenu button {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  font-size: 16px;
+  background: #e0f7fa;
+  border: 1px solid #006064;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#upgradeMenu button:hover {
+  background: #b2ebf2;
+}
+
+#pauseMenu {
+  position: fixed;
+  left: 0; top: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.5);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.pause-content {
+  background: #fff;
+  padding: 32px 48px;
+  border-radius: 16px;
+  box-shadow: 0 0 32px #0008;
+  min-width: 320px;
+  text-align: center;
+  pointer-events: auto;
+}
+#pauseMenu button {
+  margin: 10px 20px;
+  padding: 12px 32px;
+  font-size: 18px;
+  border-radius: 8px;
+  border: 1px solid #006064;
+  background: #e0f7fa;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#pauseMenu button:hover {
+  background: #b2ebf2;
+}
+
+#upgrades-panel {
+  margin: 0 auto 10px auto;
+  padding: 12px 0 0 0;
+  text-align: left;
+}
+#upgrades-panel h3 {
+  margin: 0 0 10px 0;
+  font-size: 18px;
+  color: #006064;
+}
+#upgrades-panel button {
+  display: block;
+  width: 100%;
+  margin: 8px 0;
+  padding: 10px;
+  font-size: 16px;
+  background: #e0f7fa;
+  border: 1px solid #006064;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#upgrades-panel button:hover {
+  background: #b2ebf2;
+} 
